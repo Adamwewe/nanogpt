@@ -8,7 +8,7 @@ from helpers import readData, makeMapping, make_chars
 # Globals:
 
 chars : List[Set[str]] =  make_chars(readData("datasets/input.txt"))
-
+torch.manual_seed(1337)
 stoi,  itos  = makeMapping(chars)  #typed: (Dict[str, int], Dict[int, str])
 
 # Closures:
@@ -45,24 +45,17 @@ def explore(text: str, exp=True) -> Set[str]:
     return chars
 
 
-# def makeMapping(chars: str) -> (Dict[str, int], Dict[int, str]):
+def getBatch(split: str, data: torch.tensor,
+              train, val, 
+              block_size: int=8, batch_size:int=4) -> torch.tensor:
 
-#     """
-#     foo
-#     """
-#     stoi : Dict[str, int] = {ch : i for i, ch in enumerate(chars)}
-#     itos : Dict[int, str] = {i : ch for i, ch in enumerate(chars)}
-
-#     return stoi, itos
-
-# def makeTensor() : torch.tensor:
-
-#     """
-#     foo
-#     """
-
-#     data : torch.tensor = 
-
-#     return 
-
+    """
+    foo
+    """
+    # generate a small batch of data of inputs x and targets y
+    data : torch.tensor = train if split == "train" else val
+    ix : int = torch.randint(len(data) - block_size, (batch_size,))
+    x : torch.tensor = torch.stack([data[i:i+block_size] for i in ix])
+    y : torch.tensor = torch.stack([data[i+1:i+block_size+1] for i in ix])
+    return x, y
 
